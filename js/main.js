@@ -46,9 +46,10 @@
       }
     },
     mounted() {
-      if(localStorage.getItem(STORAGE_KEY)) {
+      const str_todos = localStorage.getItem(STORAGE_KEY)
+      if(str_todos) {
         try {
-          this.todos = JSON.parse(localStorage.getItem(STORAGE_KEY))
+          this.todos = JSON.parse(str_todos)
         } catch(e) {
           localStorage.removeTodo(STORAGE_KEY)
         }
