@@ -41,8 +41,7 @@
         done: false,
         visibility: 'all',
         editedTodo: null,
-        beforeEditCache: '',
-        debug: null
+        beforeEditCache: ''
       }
     },
     mounted() {
