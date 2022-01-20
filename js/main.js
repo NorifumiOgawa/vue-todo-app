@@ -108,6 +108,12 @@ const app = {
 
 document.addEventListener('DOMContentLoaded', () => {
   const vueApp = Vue.createApp(app)
+  vueApp.directive('add', {
+    mounted(el) {
+      el.focus()
+    }
+  })
+
   vueApp.mount('#app')
   vueApp.component('list-header', {
     props: ['todos', 'remaining'],
@@ -151,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     template: `
     <p>
-      <input type="text" v-model="todoText" @keypress.enter="addTodo" placeholder="add a todo here" class="input-todo">
+      <input type="text" v-model="todoText" @keypress.enter="addTodo" placeholder="add a todo here" class="input-todo" v-add />
       <button @click="addTodo" class="btn btn-primary btn-sm">追加</button>
     </p>`
   })
@@ -173,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     template: `
     <ul class="todo-list">
-      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo === editedTodo}">
+      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: editedTodo && todo.id === editedTodo.id}">
         <todo-item :todo="todo"
          @remove-todo="removeTodo" 
          @edit-todo="editTodo" 
