@@ -49,13 +49,6 @@ const app = {
     window.addEventListener('hashchange', this.onHashChange);
     this.onHashChange();
   },
-  watch: {
-    todos: {
-      handler: function(todos) {
-        console.log('watch!')
-      }
-    }
-  },
   computed: {
     remaining() {
       const count = this.todos.reduce((count, todo) => count = (todo.done) ? count : ++count, 0);
