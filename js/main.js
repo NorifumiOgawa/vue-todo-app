@@ -3,12 +3,7 @@
 const STORAGE_KEY = 'fjord-vue-memo-1'
 const todoStorage = {
   fetch() {
-    let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
-    todos.forEach((todo, index) => {
-      todo.id = index
-    });
-    Storage.uid = todos.length;
-    return todos
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
   },
   save(todos) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
@@ -66,7 +61,7 @@ const app = {
     },
     addTodo(newTodo) {
       this.todos.push({
-        id: this.todos.length,
+        id: Date.now() + Math.floor(Math.random() * 100),
         title: newTodo,
         done: false
       })
@@ -184,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     template: `
     <ul class="todo-list">
-      <li v-for="todo in filteredTodos" :class="{completed: todo.completed, editing: todo == editedTodo}">
+      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo == editedTodo}">
         <todo-item :todo="todo"
          @remove-todo="removeTodo" 
          @edit-todo="editTodo" 
