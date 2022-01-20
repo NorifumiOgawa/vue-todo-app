@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     template: `
     <ul class="todo-list">
-      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: editedTodo && todo.id === editedTodo.id}">
+      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo === editedTodo}">
         <todo-item :todo="todo"
          @remove-todo="removeTodo" 
          @edit-todo="editTodo" 
@@ -207,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <input class="edit" type="text"
               v-model="todo.title"
-              v-todo-focus="todo == editedTodo"
               @keypress.enter="doneEdit(todo)"
               @keyup.esc="cancelEdit(todo)"
               @blur="doneEdit(todo)">
