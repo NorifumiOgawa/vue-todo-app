@@ -109,12 +109,6 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
   const vueApp = Vue.createApp(app)
   vueApp.mount('#app')
-  vueApp.directive('todo-focus', (el, binding) => {
-    console.log(binding.value)
-    // if (binding.value) {
-    //   el.focus();
-    // }
-  })
   vueApp.component('list-header', {
     props: ['todos', 'remaining'],
     methods: {
@@ -179,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     template: `
     <ul class="todo-list">
-      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: todo == editedTodo}">
+      <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: editedTodo && todo.id === editedTodo.id}">
         <todo-item :todo="todo"
          @remove-todo="removeTodo" 
          @edit-todo="editTodo" 
