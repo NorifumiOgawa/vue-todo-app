@@ -109,9 +109,6 @@ const app = {
 document.addEventListener('DOMContentLoaded', () => {
   const vueApp = Vue.createApp(app)
   vueApp.directive('add', {
-    mounted(el) {
-      el.focus()
-    }
   })
 
   vueApp.mount('#app')
@@ -180,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     template: `
     <ul class="todo-list">
       <li v-for="todo in filteredTodos" :key="todo.id" :class="{completed: todo.completed, editing: editedTodo && todo.id === editedTodo.id}">
-        <todo-item :todo="todo"
+        <todo-item :todo="todo" :editedTodo="editedTodo" 
          @remove-todo="removeTodo" 
          @edit-todo="editTodo" 
          @done-edit="doneEdit" 
@@ -190,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </ul>`
   })
   vueApp.component('todo-item', {
-    props: ['todo'],
+    props: ['todo', 'editedTodo'],
     methods: {
       editTodo: function(todo) {
         this.$emit('edit-todo', todo);
@@ -205,6 +202,13 @@ document.addEventListener('DOMContentLoaded', () => {
         this.$emit('cancel-edit', todo);
       }
     },
+    directives: {
+      focus: function(element, binding) {
+        if (binding.value) {
+          element.focus();
+        }
+      }
+    },
     template: `
       <div class="view">
         <input type="checkbox" v-model="todo.done" class="toggle">
@@ -213,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
       <input class="edit" type="text"
               v-model="todo.title"
+              v-focus="editedTodo && todo.id === editedTodo.id"
               @keypress.enter="doneEdit(todo)"
               @keyup.esc="cancelEdit(todo)"
               @blur="doneEdit(todo)">
