@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="js/main.js"></script>
+  <title>ToDoリスト</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app" class="container">
+    <h1>ToDo</h1>
+    <list-header :todos="todos" :remaining="remaining" @archive="archive"></list-header>
+    <todo-list :filtered-todos="filteredTodos" :edited-todo="editedTodo" 
+                @remove-todo="removeTodo" @edit-todo="editTodo"
+                @done-edit="doneEdit" @cancel-edit="cancelEdit"></todo-list>
+    <add-todo @add-todo="addTodo"></add-todo>
+    <list-footer :visibility="visibility"></list-footer>
+  </div>
+</body>
+</html>
